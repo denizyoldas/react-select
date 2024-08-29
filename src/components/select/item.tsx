@@ -29,8 +29,10 @@ const SelectItem: React.FC<SelectItemProps> = ({
       )}
     >
       <div className="flex items-center gap-x-2">
-        {img && <img src={img} alt={label} className="w-6 h-6 rounded-full" />}
-        {!img && icon && showItemIcon && <div>{icon}</div>}
+        {img && !showItemIcon && (
+          <img src={img} alt={label} className="w-6 h-6 rounded-full" />
+        )}
+        {icon && showItemIcon && <div>{icon}</div>}
         {label}
       </div>
       {isSelected && <IoMdCheckmark className="text-check" />}

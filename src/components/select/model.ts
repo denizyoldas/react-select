@@ -12,4 +12,5 @@ export interface SelectProps {
   icon?: React.ReactNode;
   showItemIcon?: boolean;
   onChange: (value: string) => void;
+  variant?: "default" | "chipList";
 }

@@ -7,7 +7,7 @@ export const DUMMY_OPTIONS = [
   {
     value: "jeremy",
     label: "Jeremy Lu @jeremy",
-    // img: "https://randomuser.me/api/portraits/men/23.jpg",
+    img: "https://randomuser.me/api/portraits/men/23.jpg",
   },
   {
     value: "jeremy1",
