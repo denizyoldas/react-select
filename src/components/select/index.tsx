@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import type { Option, SelectProps } from "./model";
+import { SelectVariant, type Option, type SelectProps } from "./model";
 import SelectItem from "./item";
 import { Label } from "./label";
 import { HelperText } from "./helper-text";
@@ -13,7 +13,7 @@ const Select: React.FC<SelectProps> = ({
   icon,
   showItemIcon = false,
   placeholder = "Select an option",
-  search = false,
+  variant = SelectVariant.DEFAULT,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -39,7 +39,9 @@ const Select: React.FC<SelectProps> = ({
     setSelectedOption(option);
     setIsOpen(false);
     onChange(option.value);
-    setSearchQuery(option.label);
+    if (variant === "search") {
+      setSearchQuery(option.label);
+    }
   };
 
   const filteredOptions = options.filter((option) =>
@@ -54,7 +56,7 @@ const Select: React.FC<SelectProps> = ({
         selectedOption={selectedOption}
         showItemIcon={showItemIcon}
         icon={icon}
-        search={search}
+        variant={variant}
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         placeholder={placeholder}

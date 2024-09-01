@@ -1,14 +1,14 @@
 import React from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { cn } from "../../lib/utils";
-import type { Option } from "./model";
+import { Option, SelectVariant } from "./model";
 
 interface ToggleProps {
   isOpen: boolean;
   selectedOption: Option | null;
   showItemIcon: boolean;
   icon: React.ReactNode;
-  search: boolean;
+  variant: SelectVariant;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   placeholder: string;
@@ -21,13 +21,54 @@ const Toggle: React.FC<ToggleProps> = ({
   selectedOption,
   showItemIcon,
   icon,
-  search,
   searchQuery,
   setSearchQuery,
   placeholder,
   toggleDropdown,
   setIsOpen,
+  variant,
 }) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === "Enter" || e.key === " ") {
+      toggleDropdown();
+    }
+  };
+
+  const renderIcon = () => {
+    if (selectedOption && !showItemIcon && selectedOption.img) {
+      return (
+        <img
+          src={selectedOption.img}
+          alt={selectedOption.label}
+          className="w-6 h-6 rounded-full object-cover"
+        />
+      );
+    }
+    return icon ? <div>{icon}</div> : null;
+  };
+
+  const renderInputOrPlaceholder = () => {
+    if (variant === SelectVariant.SEARCH) {
+      return (
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search"
+          className="w-full border-none outline-none"
+          onClick={(e) => e.stopPropagation()} // Prevent input click from toggling dropdown
+          onFocus={() => setIsOpen(true)}
+        />
+      );
+    }
+
+    return (
+      <span className={cn({ "text-placeholder": !selectedOption })}>
+        {selectedOption ? selectedOption.label : placeholder}
+      </span>
+    );
+  };
+
   return (
     <div
       className={cn(
@@ -36,42 +77,14 @@ const Toggle: React.FC<ToggleProps> = ({
           "border-focus shadow-focus": isOpen,
         }
       )}
-      onClick={toggleDropdown}
-      role="button"
       tabIndex={0}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          toggleDropdown();
-        }
-      }}
+      role="button"
+      onClick={toggleDropdown}
+      onKeyDown={handleKeyDown}
     >
       <div className="flex items-center gap-x-2 w-full">
-        {selectedOption && !showItemIcon && selectedOption.img ? (
-          <img
-            src={selectedOption.img}
-            alt={selectedOption.label}
-            className="w-6 h-6 rounded-full object-cover"
-          />
-        ) : (
-          icon && <div>{icon}</div>
-        )}
-        {search ? (
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search"
-            className="w-full border-none outline-none"
-            onClick={(e) => e.stopPropagation()} // Prevent input click from toggling dropdown
-            onFocus={() => setIsOpen(true)}
-          />
-        ) : (
-          <>
-            <span className="text-placeholder">
-              {selectedOption ? selectedOption.label : placeholder}
-            </span>
-          </>
-        )}
+        {renderIcon()}
+        {renderInputOrPlaceholder()}
       </div>
       <span>
         <IoIosArrowDown className="text-placeholder" />

@@ -49,7 +49,7 @@ function App() {
           onChange={handleSelectChange}
         />
         <Select
-          search
+          variant="search"
           label="Team member"
           placeholder="Select team member"
           options={DUMMY_OPTIONS_NO_IMAGE}

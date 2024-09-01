@@ -12,6 +12,11 @@ export interface SelectProps {
   icon?: React.ReactNode;
   showItemIcon?: boolean;
   onChange: (value: string) => void;
-  variant?: "default" | "chipList";
-  search?: boolean;
+  variant?: SelectVariant;
+}
+
+export enum SelectVariant {
+  DEFAULT = "default",
+  SEARCH = "search",
+  CHIP_LIST = "chipList",
 }
