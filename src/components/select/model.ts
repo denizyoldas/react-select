@@ -13,6 +13,7 @@ export interface SelectProps {
   icon?: React.ReactNode;
   showItemIcon?: boolean;
   variant?: SelectVariant;
+  filterSort?: (optionA: Option, optionB: Option) => number;
   disabled?: boolean;
   defaultValue?: string | Option[];
   selectedIcon?: React.ReactNode;

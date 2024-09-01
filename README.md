@@ -82,18 +82,21 @@ import { CiSearch } from "react-icons/ci";
 
 ### SelectProps
 
-| Prop           | Type                      | Default                 | Description                                   |
-| -------------- | ------------------------- | ----------------------- | --------------------------------------------- |
-| `options`      | `Option[]`                | `[]`                    | Array of options to display in the dropdown.  |
-| `placeholder`  | `string`                  | `"Select an option"`    | Placeholder text when no option is selected.  |
-| `helperText`   | `string`                  | `undefined`             | Helper text displayed below the dropdown.     |
-| `label`        | `string`                  | `undefined`             | Label text displayed above the dropdown.      |
-| `icon`         | `React.ReactNode`         | `undefined`             | Icon displayed inside the dropdown.           |
-| `showItemIcon` | `boolean`                 | `false`                 | Whether to show icons for each item.          |
-| `onChange`     | `(value: string) => void` | `undefined`             | Callback function when an option is selected. |
-| `selectedIcon` | `React.ReactNode`         | `undefined`             | Icon displayed for selected option.           |
-| `variant`      | `SelectVariant`           | `SelectVariant.DEFAULT` | Variant of the select component.              |
-| `disabled`     | `boolean`                 | `false`                 | Whether the select component is disabled.     |
+| Prop           | Type                                             | Default                 | Description                                   |
+| -------------- | ------------------------------------------------ | ----------------------- | --------------------------------------------- |
+| `options`      | `Option[]`                                       | `[]`                    | Array of options to display in the dropdown.  |
+| `placeholder`  | `string`                                         | `"Select an option"`    | Placeholder text when no option is selected.  |
+| `helperText`   | `string`                                         | `undefined`             | Helper text displayed below the dropdown.     |
+| `label`        | `string`                                         | `undefined`             | Label text displayed above the dropdown.      |
+| `icon`         | `React.ReactNode`                                | `undefined`             | Icon displayed inside the dropdown.           |
+| `showItemIcon` | `boolean`                                        | `false`                 | Whether to show icons for each item.          |
+| `onChange`     | `(value: string) => void`                        | `undefined`             | Callback function when an option is selected. |
+| `selectedIcon` | `React.ReactNode`                                | `undefined`             | Icon displayed for selected option.           |
+| `variant`      | `SelectVariant`                                  | `SelectVariant.DEFAULT` | Variant of the select component.              |
+| `disabled`     | `boolean`                                        | `false`                 | Whether the select component is disabled.     |
+| `defaultValue` | `string`                                         | `undefined`             | Default value of the select component.        |
+| `fieldNames`   | `{ label: string; value: string; img?: string }` | `undefined`             | Custom field names for the options.           |
+| `filterSort`   | `(optionA: Option, optionB: Option) => number`   | `undefined`             | Custom filter and sort function for options.  |
 
 ### Option
 

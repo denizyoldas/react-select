@@ -13,11 +13,11 @@ const Select: React.FC<SelectProps> = ({
   icon,
   defaultValue,
   selectedIcon,
-
   showItemIcon = false,
   placeholder = "Select an option",
   variant = "default",
   disabled = false,
+  filterSort,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -89,9 +89,19 @@ const Select: React.FC<SelectProps> = ({
     }
   };
 
+  const defaultSort = (optionA: Option, optionB: Option) => {
+    if (filterSort) {
+      return filterSort(optionA, optionB);
+    }
+
+    return 0;
+  };
+
   const filteredOptions = options.filter((option) =>
     option.label.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const sortedOptions = filteredOptions.sort(defaultSort);
 
   const handleChipRemove = (option: Option) => {
     setSelectedOptions(selectedOptions.filter((o) => o.value !== option.value));
@@ -117,7 +127,7 @@ const Select: React.FC<SelectProps> = ({
       />
       {isOpen && (
         <div className="absolute left-0 top-[107%] z-10 w-full rounded-md border border-slate-200 bg-white max-h-60 overflow-y-auto">
-          {filteredOptions.map((option) => (
+          {sortedOptions.map((option) => (
             <SelectItem
               icon={icon}
               selectedIcon={selectedIcon}
