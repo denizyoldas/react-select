@@ -13,4 +13,5 @@ export interface SelectProps {
   showItemIcon?: boolean;
   onChange: (value: string) => void;
   variant?: "default" | "chipList";
+  search?: boolean;
 }
