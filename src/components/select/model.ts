@@ -1,12 +1,12 @@
 export interface Option {
-  value: string;
   label: string;
+  value: string;
   img?: string;
 }
 
 export interface SelectProps {
   options: Option[];
-  onChange: (value: string) => void;
+  onChange: (value: string | Option[]) => void;
   placeholder?: string;
   helperText?: string;
   label?: string;
@@ -14,8 +14,13 @@ export interface SelectProps {
   showItemIcon?: boolean;
   variant?: SelectVariant;
   disabled?: boolean;
-  defaultValue?: string;
+  defaultValue?: string | Option[];
   selectedIcon?: React.ReactNode;
+  fieldNames?: {
+    label: string;
+    value: string;
+    img?: string;
+  };
 }
 
 export type SelectVariant = "default" | "search" | "chipList";

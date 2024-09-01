@@ -13,6 +13,7 @@ const Select: React.FC<SelectProps> = ({
   icon,
   defaultValue,
   selectedIcon,
+
   showItemIcon = false,
   placeholder = "Select an option",
   variant = "default",
@@ -21,6 +22,7 @@ const Select: React.FC<SelectProps> = ({
   const ref = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
+  const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleOutsideClick = (e: MouseEvent) => {
@@ -38,9 +40,13 @@ const Select: React.FC<SelectProps> = ({
 
   useEffect(() => {
     if (defaultValue) {
-      setSelectedOption(
-        options.find((option) => option.value === defaultValue) || null
-      );
+      if (Array.isArray(defaultValue)) {
+        setSelectedOptions(defaultValue);
+      } else {
+        setSelectedOption(
+          options.find((option) => option.value === defaultValue) || null
+        );
+      }
     }
   }, [defaultValue, options]);
 
@@ -54,17 +60,37 @@ const Select: React.FC<SelectProps> = ({
     if (disabled) {
       return;
     }
-    setSelectedOption(option);
     setIsOpen(false);
-    onChange(option.value);
-    if (variant === "search") {
-      setSearchQuery(option.label);
+
+    switch (variant) {
+      case "chipList":
+        setSelectedOptions([...selectedOptions, option]);
+        onChange(selectedOptions);
+        break;
+      case "search":
+        const selectedOption = options.find(
+          (option) => option.value === option.value
+        );
+        if (selectedOption) {
+          setSelectedOption(selectedOption);
+          setSearchQuery(selectedOption.label);
+          onChange(selectedOption.value);
+        }
+        break;
+      default:
+        setSelectedOption(option);
+        onChange(option.value);
+        break;
     }
   };
 
   const filteredOptions = options.filter((option) =>
     option.label.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const handleChipRemove = (option: Option) => {
+    setSelectedOptions(selectedOptions.filter((o) => o.value !== option.value));
+  };
 
   return (
     <div ref={ref} className="min-w-80 relative">
@@ -81,6 +107,8 @@ const Select: React.FC<SelectProps> = ({
         setIsOpen={setIsOpen}
         setSearchQuery={setSearchQuery}
         toggleDropdown={toggleDropdown}
+        selectedOptions={selectedOptions}
+        handleChipRemove={handleChipRemove}
       />
       {isOpen && (
         <div className="absolute left-0 top-[107%] z-10 w-full rounded-md border border-slate-200 bg-white max-h-60 overflow-y-auto">

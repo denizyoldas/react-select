@@ -15,6 +15,8 @@ interface ToggleProps {
   placeholder: string;
   toggleDropdown: () => void;
   setIsOpen: (isOpen: boolean) => void;
+  selectedOptions: Option[];
+  handleChipRemove: (option: Option) => void;
 }
 
 const Toggle: React.FC<ToggleProps> = React.memo(
@@ -30,6 +32,8 @@ const Toggle: React.FC<ToggleProps> = React.memo(
     setIsOpen,
     variant,
     disabled,
+    selectedOptions,
+    handleChipRemove,
   }) => {
     const handleKeyDown = useCallback(
       (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -69,6 +73,27 @@ const Toggle: React.FC<ToggleProps> = React.memo(
         );
       }
 
+      if (variant === "chipList" && selectedOptions.length > 0) {
+        return (
+          <div className="flex items-center gap-x-2 flex-wrap">
+            {selectedOptions.map((option) => (
+              <div
+                key={option.value}
+                className="bg-gray-200 rounded-full px-2 py-1 text-sm mr-1 mb-1"
+              >
+                {option.label}
+                <button
+                  onClick={() => handleChipRemove(option)}
+                  className="ml-1"
+                >
+                  ×
+                </button>
+              </div>
+            ))}
+          </div>
+        );
+      }
+
       return (
         <span
           className={cn({
@@ -84,6 +109,7 @@ const Toggle: React.FC<ToggleProps> = React.memo(
       searchQuery,
       setSearchQuery,
       selectedOption,
+      selectedOptions,
       placeholder,
       setIsOpen,
     ]);
