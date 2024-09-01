@@ -75,11 +75,11 @@ const Toggle: React.FC<ToggleProps> = React.memo(
 
       if (variant === "chipList" && selectedOptions.length > 0) {
         return (
-          <div className="flex items-center gap-x-2 flex-wrap">
+          <div className="flex items-center gap-2 flex-wrap">
             {selectedOptions.map((option) => (
               <div
                 key={option.value}
-                className="bg-gray-200 rounded-full px-2 py-1 text-sm mr-1 mb-1"
+                className="bg-gray-200 rounded-full px-2 py-1 text-sm"
               >
                 {option.label}
                 <button

@@ -117,7 +117,11 @@ const Select: React.FC<SelectProps> = ({
               icon={icon}
               selectedIcon={selectedIcon}
               showItemIcon={showItemIcon}
-              isSelected={selectedOption?.value === option.value}
+              isSelected={
+                selectedOptions.some(
+                  (selected) => selected.value === option.value
+                ) || selectedOption?.value === option.value
+              }
               key={option.value}
               handleOptionClick={handleOptionClick}
               {...option}

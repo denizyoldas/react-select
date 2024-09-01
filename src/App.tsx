@@ -6,7 +6,7 @@ import { usePostQuery } from "./data/use-post.query";
 
 function App() {
   const { data, isLoading } = usePostQuery();
-  const handleSelectChange = (value: string) => {
+  const handleSelectChange = (value: any) => {
     console.log("Selected value: ", value);
   };
   const options = data?.map((item: any) => ({
