@@ -20,7 +20,7 @@ const SelectItem: React.FC<SelectItemProps> = ({
 }) => {
   return (
     <div
-      onClick={() => handleOptionClick({ value, label })}
+      onClick={() => handleOptionClick({ value, label, img })}
       className={cn(
         "cursor-pointer p-2 hover:bg-slate-100 flex items-center justify-between",
         {

@@ -36,6 +36,7 @@ const Select: React.FC<SelectProps> = ({
   const toggleDropdown = () => setIsOpen(!isOpen);
 
   const handleOptionClick = (option: Option) => {
+    console.log("option", option);
     setSelectedOption(option);
     setIsOpen(false);
     onChange(option.value);
@@ -61,7 +62,15 @@ const Select: React.FC<SelectProps> = ({
         }}
       >
         <div className="flex items-center gap-x-2">
-          {icon && <div>{icon}</div>}
+          {selectedOption && !showItemIcon && selectedOption.img ? (
+            <img
+              src={selectedOption.img}
+              alt={selectedOption.label}
+              className="w-6 h-6 rounded-full object-cover"
+            />
+          ) : (
+            icon && <div>{icon}</div>
+          )}
           <span className="text-placeholder">
             {selectedOption ? selectedOption.label : placeholder}
           </span>
