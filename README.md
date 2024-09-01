@@ -107,57 +107,6 @@ import { CiSearch } from "react-icons/ci";
 | `SEARCH`    | Searchable dropdown variant.                       |
 | `CHIP_LIST` | Chip list variant allowing multiple selections.    |
 
-## Components
-
-### Label
-
-Renders the label for the select component.
-
-```typescript:src/components/select/label.tsx
-startLine: 1
-endLine: 9
-```
-
-### Toggle
-
-Handles the dropdown toggle functionality and rendering.
-
-```typescript:src/components/select/toggle.tsx
-startLine: 1
-endLine: 95
-```
-
-### SelectItem
-
-Renders individual items in the dropdown.
-
-```typescript:src/components/select/item.tsx
-startLine: 1
-endLine: 40
-```
-
-### HelperText
-
-Renders helper text below the dropdown.
-
-```typescript:src/components/select/helper-text.tsx
-startLine: 1
-endLine: 9
-```
-
-## Example
-
-Here is an example of how to use the `Select` component in an application:
-
-```typescript:src/App.tsx
-startLine: 1
-endLine: 70
-```
-
 ## License
 
 This project is licensed under the MIT License.
-
-```
-
-```
