@@ -64,18 +64,23 @@ const Select: React.FC<SelectProps> = ({
 
     switch (variant) {
       case "chipList":
-        setSelectedOptions([...selectedOptions, option]);
+        if (
+          selectedOptions.some((selected) => selected.value === option.value)
+        ) {
+          setSelectedOptions(
+            selectedOptions.filter(
+              (selected) => selected.value !== option.value
+            )
+          );
+        } else {
+          setSelectedOptions([...selectedOptions, option]);
+        }
         onChange(selectedOptions);
         break;
       case "search":
-        const selectedOption = options.find(
-          (option) => option.value === option.value
-        );
-        if (selectedOption) {
-          setSelectedOption(selectedOption);
-          setSearchQuery(selectedOption.label);
-          onChange(selectedOption.value);
-        }
+        setSelectedOption(option);
+        setSearchQuery(option.label);
+        onChange(option.value);
         break;
       default:
         setSelectedOption(option);
