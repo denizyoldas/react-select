@@ -52,7 +52,7 @@ const Toggle: React.FC<ToggleProps> = React.memo(
     }, [selectedOption, showItemIcon, icon]);
 
     const renderInputOrPlaceholder = useMemo(() => {
-      if (variant === SelectVariant.SEARCH) {
+      if (variant === "search") {
         return (
           <input
             type="text"

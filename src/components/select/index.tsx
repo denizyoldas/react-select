@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { SelectVariant, type Option, type SelectProps } from "./model";
+import { type Option, type SelectProps } from "./model";
 import SelectItem from "./item";
 import { Label } from "./label";
 import { HelperText } from "./helper-text";
@@ -13,7 +13,7 @@ const Select: React.FC<SelectProps> = ({
   icon,
   showItemIcon = false,
   placeholder = "Select an option",
-  variant = SelectVariant.DEFAULT,
+  variant = "default",
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);

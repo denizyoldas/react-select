@@ -15,8 +15,4 @@ export interface SelectProps {
   variant?: SelectVariant;
 }
 
-export enum SelectVariant {
-  DEFAULT = "default",
-  SEARCH = "search",
-  CHIP_LIST = "chipList",
-}
+export type SelectVariant = "default" | "search" | "chipList";
