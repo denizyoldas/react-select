@@ -3,6 +3,8 @@ import type { Option, SelectProps } from "./model";
 import { IoIosArrowDown } from "react-icons/io";
 import SelectItem from "./item";
 import { cn } from "../../lib/utils";
+import { Label } from "./label";
+import { HelperText } from "./helper-text";
 
 const Select: React.FC<SelectProps> = ({
   options,
@@ -41,11 +43,7 @@ const Select: React.FC<SelectProps> = ({
 
   return (
     <div ref={ref} className="min-w-80 relative">
-      {label && (
-        <div className="pb-1">
-          <label className="text-sm text-primary font-medium">{label}</label>
-        </div>
-      )}
+      <Label label={label} />
       <div
         className={cn(
           "flex items-center justify-between gap-x-2 border border-secondary rounded-lg px-3 py-2",
@@ -86,11 +84,7 @@ const Select: React.FC<SelectProps> = ({
           ))}
         </div>
       )}
-      {helperText && (
-        <div className="pt-1">
-          <p className="text-sm text-placeholder">{helperText}</p>
-        </div>
-      )}
+      <HelperText helperText={helperText} />
     </div>
   );
 };

@@ -1,12 +1,20 @@
 import Select from "./components/select";
-import { DUMMY_OPTIONS } from "./data/dummy";
+import { DUMMY_OPTIONS, DUMMY_OPTIONS_NO_IMAGE } from "./data/dummy";
 import { FaRegUser, FaCircle } from "react-icons/fa6";
 import { CiSearch } from "react-icons/ci";
+import { usePostQuery } from "./data/use-post.query";
 
 function App() {
+  const { data, isLoading } = usePostQuery();
   const handleSelectChange = (value: string) => {
     console.log("Selected value: ", value);
   };
+  const options = data?.map((item: any) => ({
+    value: item.id,
+    label: item.title,
+  }));
+
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <div className="flex items-center justify-center h-screen w-full">
@@ -14,7 +22,7 @@ function App() {
         <Select
           label="Team member"
           placeholder="Select team member"
-          options={DUMMY_OPTIONS}
+          options={options}
           onChange={handleSelectChange}
         />
         <Select
@@ -43,7 +51,7 @@ function App() {
         <Select
           label="Team member"
           placeholder="Select team member"
-          options={DUMMY_OPTIONS}
+          options={DUMMY_OPTIONS_NO_IMAGE}
           icon={<CiSearch />}
           onChange={handleSelectChange}
         />
