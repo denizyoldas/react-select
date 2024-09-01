@@ -10,6 +10,7 @@ interface ToggleProps {
   icon: React.ReactNode;
   variant: SelectVariant;
   searchQuery: string;
+  disabled: boolean;
   setSearchQuery: (query: string) => void;
   placeholder: string;
   toggleDropdown: () => void;
@@ -28,6 +29,7 @@ const Toggle: React.FC<ToggleProps> = React.memo(
     toggleDropdown,
     setIsOpen,
     variant,
+    disabled,
   }) => {
     const handleKeyDown = useCallback(
       (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -60,14 +62,20 @@ const Toggle: React.FC<ToggleProps> = React.memo(
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search"
             className="w-full border-none outline-none"
-            onClick={(e) => e.stopPropagation()} // Prevent input click from toggling dropdown
+            onClick={(e) => e.stopPropagation()}
             onFocus={() => setIsOpen(true)}
+            disabled={disabled}
           />
         );
       }
 
       return (
-        <span className={cn({ "text-placeholder": !selectedOption })}>
+        <span
+          className={cn({
+            "text-placeholder": !selectedOption,
+            "text-disabled": disabled,
+          })}
+        >
           {selectedOption ? selectedOption.label : placeholder}
         </span>
       );
@@ -86,6 +94,7 @@ const Toggle: React.FC<ToggleProps> = React.memo(
           "flex items-center justify-between gap-x-2 border border-secondary rounded-lg px-3 py-2",
           {
             "border-focus shadow-focus": isOpen,
+            "opacity-disabled cursor-not-allowed": disabled,
           }
         )}
         tabIndex={0}

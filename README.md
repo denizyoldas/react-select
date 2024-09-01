@@ -1,9 +1,11 @@
-````markdown:README.md
 # Select Component
 
 ## Overview
 
 The `Select` component is a versatile dropdown component for React applications. It supports various features such as search, chip list selection, and custom icons.
+
+![Select Component](./ss/ss1.png)
+![Select Component](./ss/ss2.png)
 
 ## Installation
 
@@ -11,7 +13,7 @@ To use the `Select` component, ensure you have the necessary dependencies instal
 
 ```bash
 npm install react react-dom react-icons
-````
+```
 
 ## Usage
 
@@ -89,7 +91,9 @@ import { CiSearch } from "react-icons/ci";
 | `icon`         | `React.ReactNode`         | `undefined`             | Icon displayed inside the dropdown.           |
 | `showItemIcon` | `boolean`                 | `false`                 | Whether to show icons for each item.          |
 | `onChange`     | `(value: string) => void` | `undefined`             | Callback function when an option is selected. |
+| `selectedIcon` | `React.ReactNode`         | `undefined`             | Icon displayed for selected option.           |
 | `variant`      | `SelectVariant`           | `SelectVariant.DEFAULT` | Variant of the select component.              |
+| `disabled`     | `boolean`                 | `false`                 | Whether the select component is disabled.     |
 
 ### Option
 

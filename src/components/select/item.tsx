@@ -7,6 +7,7 @@ type SelectItemProps = Option & {
   isSelected: boolean;
   icon?: React.ReactNode;
   showItemIcon?: boolean;
+  selectedIcon?: React.ReactNode;
 };
 
 const SelectItem: React.FC<SelectItemProps> = ({
@@ -17,6 +18,7 @@ const SelectItem: React.FC<SelectItemProps> = ({
   icon,
   img,
   showItemIcon,
+  selectedIcon,
 }) => {
   return (
     <div
@@ -35,7 +37,15 @@ const SelectItem: React.FC<SelectItemProps> = ({
         {icon && showItemIcon && <div>{icon}</div>}
         {label}
       </div>
-      {isSelected && <IoMdCheckmark className="text-check" />}
+      {isSelected && (
+        <div>
+          {selectedIcon ? (
+            selectedIcon
+          ) : (
+            <IoMdCheckmark className="text-check" />
+          )}
+        </div>
+      )}
     </div>
   );
 };

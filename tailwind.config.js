@@ -7,11 +7,15 @@ export default {
         primary: "#344054",
         secondary: "#D0D5DD",
         placeholder: "#667085",
+        disabled: "#D0D5DD",
         check: "#9f1239",
         focus: "#D6BBFB",
       },
       boxShadow: {
         focus: "0px 0px 0px 4px rgba(158, 119, 237, 0.3)",
+      },
+      opacity: {
+        disabled: "0.8",
       },
     },
   },

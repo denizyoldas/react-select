@@ -62,6 +62,7 @@ function App() {
           placeholder="Select team member"
           options={DUMMY_OPTIONS}
           icon={<FaRegUser />}
+          selectedIcon={<FaRegUser />}
           onChange={handleSelectChange}
           variant="chipList"
         />

@@ -6,13 +6,16 @@ export interface Option {
 
 export interface SelectProps {
   options: Option[];
+  onChange: (value: string) => void;
   placeholder?: string;
   helperText?: string;
   label?: string;
   icon?: React.ReactNode;
   showItemIcon?: boolean;
-  onChange: (value: string) => void;
   variant?: SelectVariant;
+  disabled?: boolean;
+  defaultValue?: string;
+  selectedIcon?: React.ReactNode;
 }
 
 export type SelectVariant = "default" | "search" | "chipList";

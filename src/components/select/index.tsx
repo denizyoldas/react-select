@@ -11,9 +11,12 @@ const Select: React.FC<SelectProps> = ({
   helperText,
   onChange,
   icon,
+  defaultValue,
+  selectedIcon,
   showItemIcon = false,
   placeholder = "Select an option",
   variant = "default",
+  disabled = false,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -33,9 +36,24 @@ const Select: React.FC<SelectProps> = ({
     };
   }, []);
 
-  const toggleDropdown = () => setIsOpen(!isOpen);
+  useEffect(() => {
+    if (defaultValue) {
+      setSelectedOption(
+        options.find((option) => option.value === defaultValue) || null
+      );
+    }
+  }, [defaultValue, options]);
+
+  const toggleDropdown = () => {
+    if (!disabled) {
+      setIsOpen(!isOpen);
+    }
+  };
 
   const handleOptionClick = (option: Option) => {
+    if (disabled) {
+      return;
+    }
     setSelectedOption(option);
     setIsOpen(false);
     onChange(option.value);
@@ -52,22 +70,24 @@ const Select: React.FC<SelectProps> = ({
     <div ref={ref} className="min-w-80 relative">
       <Label label={label} />
       <Toggle
-        isOpen={isOpen}
-        selectedOption={selectedOption}
-        showItemIcon={showItemIcon}
         icon={icon}
+        isOpen={isOpen}
         variant={variant}
+        disabled={disabled}
         searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
         placeholder={placeholder}
-        toggleDropdown={toggleDropdown}
+        showItemIcon={showItemIcon}
+        selectedOption={selectedOption}
         setIsOpen={setIsOpen}
+        setSearchQuery={setSearchQuery}
+        toggleDropdown={toggleDropdown}
       />
       {isOpen && (
         <div className="absolute left-0 top-[107%] z-10 w-full rounded-md border border-slate-200 bg-white max-h-60 overflow-y-auto">
           {filteredOptions.map((option) => (
             <SelectItem
               icon={icon}
+              selectedIcon={selectedIcon}
               showItemIcon={showItemIcon}
               isSelected={selectedOption?.value === option.value}
               key={option.value}
