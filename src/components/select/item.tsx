@@ -8,21 +8,32 @@ type SelectItemProps = Option & {
   icon?: React.ReactNode;
   showItemIcon?: boolean;
   selectedIcon?: React.ReactNode;
+  optionRender?: (option: Option) => React.ReactNode;
 };
 
-const SelectItem: React.FC<SelectItemProps> = ({
-  value,
-  label,
-  handleOptionClick,
-  isSelected,
-  icon,
-  img,
-  showItemIcon,
-  selectedIcon,
-}) => {
+const SelectItem: React.FC<SelectItemProps> = (props) => {
+  const {
+    label,
+    icon,
+    showItemIcon,
+    selectedIcon,
+    optionRender,
+    handleOptionClick,
+    isSelected,
+  } = props;
+
+  const renderOption = optionRender ? (
+    optionRender(props)
+  ) : (
+    <div className="flex items-center gap-x-2">
+      {icon && showItemIcon && <div>{icon}</div>}
+      {label}
+    </div>
+  );
+
   return (
     <div
-      onClick={() => handleOptionClick({ value, label, img })}
+      onClick={() => handleOptionClick(props)}
       className={cn(
         "cursor-pointer p-2 hover:bg-slate-100 flex items-center justify-between",
         {
@@ -30,13 +41,7 @@ const SelectItem: React.FC<SelectItemProps> = ({
         }
       )}
     >
-      <div className="flex items-center gap-x-2">
-        {img && !showItemIcon && (
-          <img src={img} alt={label} className="w-6 h-6 rounded-full" />
-        )}
-        {icon && showItemIcon && <div>{icon}</div>}
-        {label}
-      </div>
+      {renderOption}
       {isSelected && (
         <div>
           {selectedIcon ? (

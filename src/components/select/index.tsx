@@ -20,6 +20,8 @@ const Select: React.FC<SelectProps> = ({
   disabled = false,
   filterSort,
   noOptionsMessage = "No options available",
+  optionRender,
+  tagRender,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -117,6 +119,7 @@ const Select: React.FC<SelectProps> = ({
         toggleDropdown={toggleDropdown}
         selectedOptions={selectedOptions}
         handleChipRemove={handleChipRemove}
+        tagRender={tagRender}
       />
       {isOpen && (
         <div className="absolute left-0 top-[107%] z-10 w-full rounded-md border border-slate-200 bg-white max-h-60 overflow-y-auto">
@@ -124,6 +127,7 @@ const Select: React.FC<SelectProps> = ({
             sortedOptions.map((option) => (
               <SelectItem
                 icon={icon}
+                optionRender={optionRender}
                 selectedIcon={selectedIcon}
                 showItemIcon={showItemIcon}
                 isSelected={

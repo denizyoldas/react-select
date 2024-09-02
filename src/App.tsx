@@ -1,5 +1,5 @@
 import Select from "./components/select";
-import { DUMMY_OPTIONS, DUMMY_OPTIONS_NO_IMAGE } from "./data/dummy";
+import { DUMMY_OPTIONS } from "./data/dummy";
 import { FaRegUser, FaCircle } from "react-icons/fa6";
 import { CiSearch } from "react-icons/ci";
 import { usePostQuery } from "./data/use-post.query";
@@ -19,12 +19,13 @@ function App() {
 
   return (
     <div className="flex items-center justify-center h-screen w-full">
-      <div className="grid grid-cols-1 gap-4 max-w-lg">
+      <div className="grid grid-cols-1 gap-4 max-w-md">
         <Select
           label="Team member"
           placeholder="Select team member"
           options={options}
           onChange={handleSelectChange}
+          helperText="This is a hint text to help user."
         />
         <Select
           showItemIcon
@@ -40,6 +41,16 @@ function App() {
           options={DUMMY_OPTIONS}
           icon={<FaRegUser />}
           onChange={handleSelectChange}
+          optionRender={(option) => (
+            <div className="flex items-center gap-x-2">
+              <img
+                src={option.img}
+                alt={option.label}
+                className="w-6 h-6 rounded-full"
+              />
+              {option.label}
+            </div>
+          )}
         />
         <Select
           showItemIcon
@@ -53,18 +64,46 @@ function App() {
           variant="search"
           label="Team member"
           placeholder="Select team member"
-          options={DUMMY_OPTIONS_NO_IMAGE}
+          options={DUMMY_OPTIONS}
           icon={<CiSearch />}
           onChange={handleSelectChange}
         />
         <Select
-          showItemIcon
           label="Team member"
           placeholder="Select team member"
           options={DUMMY_OPTIONS}
           icon={<CiSearch />}
           onChange={handleSelectChange}
           variant="chipList"
+          optionRender={(option) => (
+            <div className="flex items-center gap-x-2">
+              <img
+                src={option.img}
+                alt={option.label}
+                className="w-6 h-6 rounded-full"
+              />
+              {option.label}
+            </div>
+          )}
+          tagRender={(option) => (
+            <div
+              key={option.value}
+              className="rounded-md px-2 py-1 text-sm border border-secondary flex items-center gap-x-2"
+            >
+              <img
+                src={option.img}
+                alt={option.label}
+                className="w-6 h-6 rounded-full"
+              />
+              {option.label.split("@")[0]}
+              <button
+                onClick={() => option.handleChipRemove(option)}
+                className="ml-1 text-secondary"
+              >
+                ×
+              </button>
+            </div>
+          )}
         />
       </div>
     </div>

@@ -45,26 +45,3 @@ export const DUMMY_OPTIONS = [
     img: "https://randomuser.me/api/portraits/men/22.jpg",
   },
 ];
-
-export const DUMMY_OPTIONS_NO_IMAGE = [
-  {
-    value: "option1",
-    label: "Option One @opt1",
-  },
-  {
-    value: "option2",
-    label: "Option Two @opt2",
-  },
-  {
-    value: "option3",
-    label: "Option Three @opt3",
-  },
-  {
-    value: "option4",
-    label: "Option Four @opt4",
-  },
-  {
-    value: "option5",
-    label: "Option Five @opt5",
-  },
-];

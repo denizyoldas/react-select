@@ -17,6 +17,7 @@ interface ToggleProps {
   setIsOpen: (isOpen: boolean) => void;
   selectedOptions: Option[];
   handleChipRemove: (option: Option) => void;
+  tagRender?: (option: Option) => React.ReactNode;
 }
 
 const Toggle: React.FC<ToggleProps> = React.memo((props) => {
@@ -34,6 +35,7 @@ const Toggle: React.FC<ToggleProps> = React.memo((props) => {
     disabled,
     selectedOptions,
     handleChipRemove,
+    tagRender,
   } = props;
 
   const handleKeyDown = useCallback(
@@ -77,17 +79,24 @@ const Toggle: React.FC<ToggleProps> = React.memo((props) => {
     if (variant === "chipList") {
       return (
         <div className="flex items-center gap-2 flex-wrap w-full">
-          {selectedOptions.map((option) => (
-            <div
-              key={option.value}
-              className="bg-gray-200 rounded-full px-2 py-1 text-sm"
-            >
-              {option.label}
-              <button onClick={() => handleChipRemove(option)} className="ml-1">
-                ×
-              </button>
-            </div>
-          ))}
+          {selectedOptions.map((option) =>
+            tagRender ? (
+              tagRender({ ...option, handleChipRemove })
+            ) : (
+              <div
+                key={option.value}
+                className="rounded-md px-2 py-1 text-sm border border-secondary"
+              >
+                {option.label}
+                <button
+                  onClick={() => handleChipRemove(option)}
+                  className="ml-1 text-secondary"
+                >
+                  ×
+                </button>
+              </div>
+            )
+          )}
           <input
             type="text"
             value={searchQuery}
@@ -122,6 +131,7 @@ const Toggle: React.FC<ToggleProps> = React.memo((props) => {
     setIsOpen,
     disabled,
     handleChipRemove,
+    tagRender,
   ]);
 
   return (

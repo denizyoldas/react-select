@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface Option {
   label: string;
   value: string;
-  img?: string;
+  // [key: string]: string | number | React.ReactNode | undefined;
+  [key: string]: any;
 }
 
 export interface SelectProps {
@@ -13,16 +15,13 @@ export interface SelectProps {
   icon?: React.ReactNode;
   showItemIcon?: boolean;
   variant?: SelectVariant;
-  filterSort?: (optionA: Option, optionB: Option) => number;
   disabled?: boolean;
   defaultValue?: string | Option[];
   selectedIcon?: React.ReactNode;
-  fieldNames?: {
-    label: string;
-    value: string;
-    img?: string;
-  };
   noOptionsMessage?: string;
+  filterSort?: (optionA: Option, optionB: Option) => number;
+  optionRender?: (option: Option) => React.ReactNode;
+  tagRender?: (option: Option) => React.ReactNode;
 }
 
 export type SelectVariant = "default" | "search" | "chipList";
