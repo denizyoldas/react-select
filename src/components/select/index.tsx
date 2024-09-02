@@ -5,6 +5,7 @@ import { Label } from "./label";
 import { HelperText } from "./helper-text";
 import Toggle from "./toggle";
 import useOutsideClick from "../../hooks/use-outside-click";
+import { cn } from "../../lib/utils";
 
 const Select: React.FC<SelectProps> = ({
   options,
@@ -122,7 +123,14 @@ const Select: React.FC<SelectProps> = ({
         tagRender={tagRender}
       />
       {isOpen && (
-        <div className="absolute left-0 top-[107%] z-10 w-full rounded-md border border-slate-200 bg-white max-h-60 overflow-y-auto">
+        <div
+          className={cn(
+            "absolute left-0 top-[107%] z-10 w-full rounded-md border border-slate-200 bg-white max-h-60 overflow-y-auto",
+            {
+              "top-[83%]": helperText,
+            }
+          )}
+        >
           {sortedOptions.length > 0 ? (
             sortedOptions.map((option) => (
               <SelectItem
