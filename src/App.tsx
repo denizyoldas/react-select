@@ -19,7 +19,7 @@ function App() {
 
   return (
     <div className="flex items-center justify-center h-screen w-full">
-      <div className="grid grid-cols-1 gap-4">
+      <div className="grid grid-cols-1 gap-4 max-w-lg">
         <Select
           label="Team member"
           placeholder="Select team member"

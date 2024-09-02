@@ -19,8 +19,8 @@ interface ToggleProps {
   handleChipRemove: (option: Option) => void;
 }
 
-const Toggle: React.FC<ToggleProps> = React.memo(
-  ({
+const Toggle: React.FC<ToggleProps> = React.memo((props) => {
+  const {
     isOpen,
     selectedOption,
     showItemIcon,
@@ -34,122 +34,119 @@ const Toggle: React.FC<ToggleProps> = React.memo(
     disabled,
     selectedOptions,
     handleChipRemove,
-  }) => {
-    const handleKeyDown = useCallback(
-      (e: React.KeyboardEvent<HTMLDivElement>) => {
-        if (e.key === "Enter" || e.key === " ") {
-          toggleDropdown();
-        }
-      },
-      [toggleDropdown]
-    );
+  } = props;
 
-    const renderIcon = useMemo(() => {
-      if (selectedOption && !showItemIcon && selectedOption.img) {
-        return (
-          <img
-            src={selectedOption.img}
-            alt={selectedOption.label}
-            className="w-6 h-6 rounded-full object-cover"
-          />
-        );
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      if (e.key === "Enter" || e.key === " ") {
+        toggleDropdown();
       }
-      return icon ? <div>{icon}</div> : null;
-    }, [selectedOption, showItemIcon, icon]);
+    },
+    [toggleDropdown]
+  );
 
-    const renderInputOrPlaceholder = useMemo(() => {
-      if (variant === "search") {
-        return (
+  const renderIcon = useMemo(() => {
+    if (selectedOption && !showItemIcon && selectedOption.img) {
+      return (
+        <img
+          src={selectedOption.img}
+          alt={selectedOption.label}
+          className="w-6 h-6 rounded-full object-cover"
+        />
+      );
+    }
+    return icon ? <div>{icon}</div> : null;
+  }, [selectedOption, showItemIcon, icon]);
+
+  const renderInputOrPlaceholder = useMemo(() => {
+    if (variant === "search") {
+      return (
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search"
+          className="w-full border-none outline-none"
+          onClick={(e) => e.stopPropagation()}
+          onFocus={() => setIsOpen(true)}
+          disabled={disabled}
+        />
+      );
+    }
+
+    if (variant === "chipList") {
+      return (
+        <div className="flex items-center gap-2 flex-wrap w-full">
+          {selectedOptions.map((option) => (
+            <div
+              key={option.value}
+              className="bg-gray-200 rounded-full px-2 py-1 text-sm"
+            >
+              {option.label}
+              <button onClick={() => handleChipRemove(option)} className="ml-1">
+                ×
+              </button>
+            </div>
+          ))}
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search"
-            className="w-full border-none outline-none"
+            className="border-none outline-none flex-grow"
             onClick={(e) => e.stopPropagation()}
             onFocus={() => setIsOpen(true)}
             disabled={disabled}
           />
-        );
-      }
-
-      if (variant === "chipList") {
-        return (
-          <div className="flex items-center gap-2 flex-wrap w-full">
-            {selectedOptions.map((option) => (
-              <div
-                key={option.value}
-                className="bg-gray-200 rounded-full px-2 py-1 text-sm"
-              >
-                {option.label}
-                <button
-                  onClick={() => handleChipRemove(option)}
-                  className="ml-1"
-                >
-                  ×
-                </button>
-              </div>
-            ))}
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search"
-              className="border-none outline-none flex-grow"
-              onClick={(e) => e.stopPropagation()}
-              onFocus={() => setIsOpen(true)}
-              disabled={disabled}
-            />
-          </div>
-        );
-      }
-
-      return (
-        <span
-          className={cn({
-            "text-placeholder": !selectedOption,
-            "text-disabled": disabled,
-          })}
-        >
-          {selectedOption ? selectedOption.label : placeholder}
-        </span>
+        </div>
       );
-    }, [
-      variant,
-      searchQuery,
-      setSearchQuery,
-      selectedOption,
-      selectedOptions,
-      placeholder,
-      setIsOpen,
-      disabled,
-      handleChipRemove,
-    ]);
+    }
 
     return (
-      <div
-        className={cn(
-          "flex items-center justify-between gap-x-2 border border-secondary rounded-lg px-3 py-2",
-          {
-            "border-focus shadow-focus": isOpen,
-            "opacity-disabled cursor-not-allowed": disabled,
-          }
-        )}
-        tabIndex={0}
-        role="button"
-        onClick={toggleDropdown}
-        onKeyDown={handleKeyDown}
+      <span
+        className={cn({
+          "text-placeholder": !selectedOption,
+          "text-disabled": disabled,
+        })}
       >
-        <div className="flex items-center gap-x-2 w-full">
-          {renderIcon}
-          {renderInputOrPlaceholder}
-        </div>
-        <span>
-          <IoIosArrowDown className="text-placeholder" />
-        </span>
-      </div>
+        {selectedOption ? selectedOption.label : placeholder}
+      </span>
     );
-  }
-);
+  }, [
+    variant,
+    searchQuery,
+    setSearchQuery,
+    selectedOption,
+    selectedOptions,
+    placeholder,
+    setIsOpen,
+    disabled,
+    handleChipRemove,
+  ]);
+
+  return (
+    <div
+      className={cn(
+        "flex items-center justify-between gap-x-2 border border-secondary rounded-lg px-3 py-2",
+        {
+          "border-focus shadow-focus": isOpen,
+          "opacity-disabled cursor-not-allowed": disabled,
+        }
+      )}
+      tabIndex={0}
+      role="button"
+      onClick={toggleDropdown}
+      onKeyDown={handleKeyDown}
+    >
+      <div className="flex items-center gap-x-2 w-full">
+        {renderIcon}
+        {renderInputOrPlaceholder}
+      </div>
+      <span>
+        <IoIosArrowDown className="text-placeholder" />
+      </span>
+    </div>
+  );
+});
 
 export default Toggle;

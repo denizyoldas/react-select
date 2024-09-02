@@ -22,6 +22,7 @@ export interface SelectProps {
     value: string;
     img?: string;
   };
+  noOptionsMessage?: string;
 }
 
 export type SelectVariant = "default" | "search" | "chipList";

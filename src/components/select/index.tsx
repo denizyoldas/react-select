@@ -4,6 +4,7 @@ import SelectItem from "./item";
 import { Label } from "./label";
 import { HelperText } from "./helper-text";
 import Toggle from "./toggle";
+import useOutsideClick from "../../hooks/use-outside-click";
 
 const Select: React.FC<SelectProps> = ({
   options,
@@ -18,6 +19,7 @@ const Select: React.FC<SelectProps> = ({
   variant = "default",
   disabled = false,
   filterSort,
+  noOptionsMessage = "No options available",
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -25,18 +27,7 @@ const Select: React.FC<SelectProps> = ({
   const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const handleOutsideClick = (e: MouseEvent) => {
-    if (ref.current && !ref.current.contains(e.target as Node)) {
-      setIsOpen(false);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener("click", handleOutsideClick);
-    return () => {
-      window.removeEventListener("click", handleOutsideClick);
-    };
-  }, []);
+  useOutsideClick(ref, () => setIsOpen(false));
 
   useEffect(() => {
     if (defaultValue) {
@@ -129,21 +120,27 @@ const Select: React.FC<SelectProps> = ({
       />
       {isOpen && (
         <div className="absolute left-0 top-[107%] z-10 w-full rounded-md border border-slate-200 bg-white max-h-60 overflow-y-auto">
-          {sortedOptions.map((option) => (
-            <SelectItem
-              icon={icon}
-              selectedIcon={selectedIcon}
-              showItemIcon={showItemIcon}
-              isSelected={
-                selectedOptions.some(
-                  (selected) => selected.value === option.value
-                ) || selectedOption?.value === option.value
-              }
-              key={option.value}
-              handleOptionClick={handleOptionClick}
-              {...option}
-            />
-          ))}
+          {sortedOptions.length > 0 ? (
+            sortedOptions.map((option) => (
+              <SelectItem
+                icon={icon}
+                selectedIcon={selectedIcon}
+                showItemIcon={showItemIcon}
+                isSelected={
+                  selectedOptions.some(
+                    (selected) => selected.value === option.value
+                  ) || selectedOption?.value === option.value
+                }
+                key={option.value}
+                handleOptionClick={handleOptionClick}
+                {...option}
+              />
+            ))
+          ) : (
+            <div className="p-4 text-center text-gray-500">
+              {noOptionsMessage}
+            </div>
+          )}
         </div>
       )}
       <HelperText helperText={helperText} />
