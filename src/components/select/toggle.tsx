@@ -73,9 +73,9 @@ const Toggle: React.FC<ToggleProps> = React.memo(
         );
       }
 
-      if (variant === "chipList" && selectedOptions.length > 0) {
+      if (variant === "chipList") {
         return (
-          <div className="flex items-center gap-2 flex-wrap">
+          <div className="flex items-center gap-2 flex-wrap w-full">
             {selectedOptions.map((option) => (
               <div
                 key={option.value}
@@ -90,6 +90,16 @@ const Toggle: React.FC<ToggleProps> = React.memo(
                 </button>
               </div>
             ))}
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search"
+              className="border-none outline-none flex-grow"
+              onClick={(e) => e.stopPropagation()}
+              onFocus={() => setIsOpen(true)}
+              disabled={disabled}
+            />
           </div>
         );
       }
@@ -112,6 +122,8 @@ const Toggle: React.FC<ToggleProps> = React.memo(
       selectedOptions,
       placeholder,
       setIsOpen,
+      disabled,
+      handleChipRemove,
     ]);
 
     return (

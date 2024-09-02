@@ -3,13 +3,14 @@ import { DUMMY_OPTIONS, DUMMY_OPTIONS_NO_IMAGE } from "./data/dummy";
 import { FaRegUser, FaCircle } from "react-icons/fa6";
 import { CiSearch } from "react-icons/ci";
 import { usePostQuery } from "./data/use-post.query";
+import { Option } from "./components/select/model";
 
 function App() {
   const { data, isLoading } = usePostQuery();
-  const handleSelectChange = (value: any) => {
+  const handleSelectChange = (value: string | Option[]) => {
     console.log("Selected value: ", value);
   };
-  const options = data?.map((item: any) => ({
+  const options = data?.map((item: { id: string; title: string }) => ({
     value: item.id,
     label: item.title,
   }));
@@ -18,7 +19,7 @@ function App() {
 
   return (
     <div className="flex items-center justify-center h-screen w-full">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 gap-4">
         <Select
           label="Team member"
           placeholder="Select team member"
@@ -61,8 +62,7 @@ function App() {
           label="Team member"
           placeholder="Select team member"
           options={DUMMY_OPTIONS}
-          icon={<FaRegUser />}
-          selectedIcon={<FaRegUser />}
+          icon={<CiSearch />}
           onChange={handleSelectChange}
           variant="chipList"
         />

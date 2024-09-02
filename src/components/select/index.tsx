@@ -60,7 +60,6 @@ const Select: React.FC<SelectProps> = ({
     if (disabled) {
       return;
     }
-    setIsOpen(false);
 
     switch (variant) {
       case "chipList":
@@ -75,14 +74,17 @@ const Select: React.FC<SelectProps> = ({
         } else {
           setSelectedOptions([...selectedOptions, option]);
         }
+        setSearchQuery("");
         onChange(selectedOptions);
         break;
       case "search":
+        setIsOpen(false);
         setSelectedOption(option);
         setSearchQuery(option.label);
         onChange(option.value);
         break;
       default:
+        setIsOpen(false);
         setSelectedOption(option);
         onChange(option.value);
         break;
